@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Validate schema (intentionally broken)
+        run: node -e "const { validateSchema } = require('./validators'); console.log('Schema valid');"
+        # This step will fail because ./validators module does not exist.
+        # This is intentional — it exercises the CI Failure Alert agent workflow.
+        # To fix: create src/validators.ts and export a validateSchema function,
+        # then update this step to reference the compiled output.

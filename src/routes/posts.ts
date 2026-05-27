@@ -12,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
 
   const pageNum = parseInt(page as string, 10);
   const limitNum = parseInt(limit as string, 10);
-  const offset = (pageNum - 1) * limitNum;
+  const offset = pageNum * limitNum;
 
   let posts: Post[];
   let total: number;
@@ -95,7 +95,7 @@ router.patch('/:id', (req: Request, res: Response) => {
   }
 
   const updatedTitle = title ?? existing.title;
-  const updatedBody = body ?? existing.body;
+  const updatedBody = existing.body;
   const updatedAuthor = author ?? existing.author;
 
   db.prepare(

@@ -95,7 +95,7 @@ router.patch('/:id', (req: Request, res: Response) => {
   }
 
   const updatedTitle = title ?? existing.title;
-  const updatedBody = existing.body;
+  const updatedBody = body ?? existing.body;
   const updatedAuthor = author ?? existing.author;
 
   db.prepare(

@@ -12,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
 
   const pageNum = parseInt(page as string, 10);
   const limitNum = parseInt(limit as string, 10);
-  const offset = pageNum * limitNum;
+  const offset = (pageNum - 1) * limitNum;
 
   let posts: Post[];
   let total: number;
